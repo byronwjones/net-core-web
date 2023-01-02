@@ -5,11 +5,11 @@ namespace BWJ.Core.Web.ApiFramework
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterApiHandlers(this IServiceCollection services)
+        public static IServiceCollection RegisterApiHandlers<TFromAssembly>(this IServiceCollection services)
         {
             services.AddScoped<IApiHandlerMediator, ApiHandlerMediator>();
 
-            var handlers = typeof(ServiceCollectionExtensions)
+            var handlers = typeof(TFromAssembly)
                 .Assembly.GetExportedTypes()
                 .Where(t => t.IsSubclassOfGenericClassDefinition(typeof(ApiHandler<,>)));
 
